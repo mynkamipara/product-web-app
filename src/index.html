@@ -1,0 +1,31 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.io Chat</title>
+</head>
+<body>
+  <input type="text" id="message" placeholder="Type a message" />
+  <button onclick="sendMessage()">Send</button>
+  <ul id="messages"></ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:8080');
+    const messages = document.getElementById('messages');
+
+    socket.on('message', (message) => {
+      const li = document.createElement('li');
+      li.textContent = message;
+      messages.appendChild(li);
+    });
+
+    function sendMessage() {
+      const messageInput = document.getElementById('message');
+      const message = messageInput.value;
+      socket.emit('jointestroom', message);
+      messageInput.value = '';
+    }
+  </script>
+</body>
+</html>
